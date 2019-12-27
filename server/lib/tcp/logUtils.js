@@ -19,7 +19,7 @@ function makeLogSender(networkType) {
 
   switch (networkType) {
     case "tcp":
-      return async function send(query, ...restData) {
+      return async function send(data, ...restData) {
         const timestamp = Date.now();
         let spanId;
         let errorMsg;
@@ -27,22 +27,28 @@ function makeLogSender(networkType) {
 
         if (restData[0]) {
           const restObject = restData[0];
+
           if (restObject.hasOwnProperty("spanId")) spanId = restObject.spanId;
-          if (restObject.hasOwnProperty("error")) {
-            error = restObject.error;
-            errorMsg = restObject.errorMsg;
-          }
+          // if (restObject.hasOwnProperty("error")) {
+          //   error = restObject.error;
+          //   errorMsg = restObject.errorMsg;
+          // }
         } else {
           spanId = await generateId(timestamp);
         }
         const logData = {
-          query,
+          query: data.nextQuery,
+          method: data.method,
           spanId,
           service: name,
           timestamp,
           error,
           errorMsg
         };
+
+        if (data.method === "ERROR") {
+          logData.errorMsg = data.body.errorMsg;
+        }
 
         this.logService.write(
           makePacket(

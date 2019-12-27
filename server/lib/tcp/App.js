@@ -64,14 +64,14 @@ class App extends TcpServer {
       appClient.write(packet);
     }
     if (!isLogService(data.info.name) && data.spanId) {
-      if (isErrorPacket(data.method)) {
-        await this.sendTcpLog(data, {
-          spanId: data.spanId,
-          error: data.method,
-          errorMsg: data.body.msg
-        });
-        return;
-      }
+      // if (isErrorPacket(data.method)) {
+      //   await this.sendTcpLog(data, {
+      //     spanId: data.spanId,
+      //     error: data.method,
+      //     errorMsg: data.body.msg
+      //   });
+      //   return;
+      // }
       await this.sendTcpLog(data, { spanId: data.spanId });
     }
   }
