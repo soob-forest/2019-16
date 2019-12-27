@@ -9,7 +9,7 @@ async function jobEexcutor(_socket, data) {
   try {
     queryResult = await queryResolver(nextQuery, params);
   } catch (error) {
-    queryResult = { method: "ERROR", body: { error } };
+    queryResult = { method: "ERROR", body: { errorMsg: error.toString() } };
   } finally {
     if (nextQuery === "availableRooms") {
       socket = this.appClients.reservation;
