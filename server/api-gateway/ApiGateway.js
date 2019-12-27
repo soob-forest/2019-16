@@ -33,8 +33,6 @@ class ApiGateway extends App {
       this.httpLogSender({
         traceId: traceId,
         spanId: traceId,
-        errors: status,
-        errorMsg: error.message,
         response: Number(status)
       });
     }
