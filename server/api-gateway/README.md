@@ -68,8 +68,7 @@
 
 | No. | Method |     Url      |        Body        |                                 What                                     |
 | :-: | :----: | :----------: | :----------------: | :----------------------------------------------------------------------: |
-|  1  | `GET` |`api/query/:searchWord/location/:lat/:lon/:isRecruit`|| `검색어로 필터링한 스터디그룹 조회` |
-|  2  | `GET`  |`/api/query/:searchWord/category/:category/location/:lat/:lon/:isRecruit`|| `검색어와 카테고리로 필터링한 스터디그룹 조회`|
-|  3  | `GET`  |`/api/all/location/:lat/:lon/:isRecruit` ||`모든 스터디그룹 조회`|
-|  4  | `GET`  |`/api/all/category/:category/location/:lat/:lon/:isRecruit`||`카테고리로 필터링 한 모든 스터디 그룹 조회`|
-|  5  | `POST` |`/api/tags`| `{tags, category, lat, lon, isRecruit}`|`태그 검색`|
+|  1  | `GET` |`api/search/studygroups/:searchWord/mode/:mode/location/:lat/:lon/:isRecruit`|| `검색어로 필터링한 스터디그룹 조회` |
+|  2  | `GET`  |`/api/search/studygroups/:searchWord/mode/:mode/category/:category/location/:lat/:lon/:isRecruit`|| `검색어와 카테고리로 필터링한 스터디그룹 조회`|
+|  3  | `GET`  |`/api/search/studygroups/mode/:mode/location/:lat/:lon/:isRecruit` ||`모든 스터디그룹 조회`|
+|  4  | `GET`  |`/api/search/studygroups/mode/:mode/category/:category/location/:lat/:lon/:isRecruit`||`카테고리로 필터링 한 모든 스터디 그룹 조회`|
