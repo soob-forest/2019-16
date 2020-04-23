@@ -25,6 +25,7 @@ module.exports = function (apiGateway) {
     "/studygroups/:searchWord/mode/:mode/location/:lat/:lon/page/:page/:isRecruit",
     (req, res, next) => {
       const { searchWord, mode, lat, lon, page, isRecruit } = req.params;
+      const { tags } = req.query;
       let packet;
       if (mode === "normal") {
         packet = makePacket(
@@ -67,6 +68,7 @@ module.exports = function (apiGateway) {
         page,
         isRecruit
       } = req.params;
+      const { tags } = req.query;
       let packet;
       if (mode === "normal") {
         packet = makePacket(
