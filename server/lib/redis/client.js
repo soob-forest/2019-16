@@ -1,6 +1,17 @@
-const redis = require("redis");
-//const client = redis.createClient(6379, "106.10.57.60");
-const client = redis.createClient();
-const multi = client.multi();
+const { CACHE_HOST } = process.env;
 
-module.exports = { client, multi };
+let Redis = require("ioredis");
+
+const redis = require("redis");
+
+const cacheClient = redis.createClient(6379, CACHE_HOST);
+
+const client = new Redis({
+    sentinels: [
+        { host: "106.10.41.25", port: 16379 },
+        { host: "106.10.41.25", port: 16378 }
+    ],
+    name: "mymaster"
+});
+
+module.exports = { client, cacheClient };
