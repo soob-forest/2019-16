@@ -65,12 +65,20 @@ class App extends TcpServer {
       if (isErrorPacket(data.method)) {
         await this.sendTcpLog(data.curQuery, {
           spanId: data.spanId,
+<<<<<<< HEAD
           errors: data.method,
+=======
+          error: data.method,
+>>>>>>> origin/service/gateway
           errorMsg: data.body.msg
         });
         return;
       }
+<<<<<<< HEAD
       await this.sendTcpLog(data.curQuery, { spanId: data.spanId });
+=======
+      await this.sendTcpLog(data.curQuery, data.spanId);
+>>>>>>> origin/service/gateway
     }
   }
 
