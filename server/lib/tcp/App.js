@@ -84,6 +84,17 @@ class App extends TcpServer {
       }
       await this.sendTcpLog(data.curQuery, { spanId: data.spanId });
     }
+    if (!isLogService(data.info.name) && data.spanId) {
+      if (isErrorPacket(data.method)) {
+        await this.sendTcpLog(data.curQuery, {
+          spanId: data.spanId,
+          error: data.method,
+          errorMsg: data.body.msg
+        });
+        return;
+      }
+      await this.sendTcpLog(data.curQuery, { spanId: data.spanId });
+    }
   }
 
   async connectToApp(name, onCreate, onRead, onEnd, onError) {
