@@ -26,7 +26,7 @@ class App extends TcpServer {
     const packets = await popMessageQueue(this.context.name, 1000);
 
     if (!Array.isArray(packets)) {
-      this.job({}, JSON.parse(packets));
+      this.job(JSON.parse(packets), null);
     } else {
       packets.forEach((packet) => {
         this.job({}, JSON.parse(packet));
@@ -40,8 +40,7 @@ class App extends TcpServer {
 
       data.spanId = spanId;
     }
-
-    this.job(socket, data);
+    this.job(data, socket);
   }
 
   async send(appClient, data) {
@@ -58,8 +57,21 @@ class App extends TcpServer {
 
     if (data.curQuery === data.endQuery) {
       this.ApiGateway.write(packet);
-    } else {
-      appClient.write(packet);
+    }
+
+    if (appName) {
+      this.appClients[appName].write(packet);
+    }
+    if (!isLogService(data.info.name) && data.spanId) {
+      if (isErrorPacket(data.method)) {
+        await this.sendTcpLog(data.curQuery, {
+          spanId: data.spanId,
+          error: data.method,
+          errorMsg: data.body.msg
+        });
+        return;
+      }
+      await this.sendTcpLog(data.curQuery, { spanId: data.spanId });
     }
     if (!isLogService(data.info.name) && data.spanId) {
       if (isErrorPacket(data.method)) {
