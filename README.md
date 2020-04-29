@@ -13,7 +13,6 @@
 
 > ✏ 스터디원을 모집하고 원하는 지역에 이용 가능한 스터디룸을 예약할 수 있도록 검색해주는 플랫폼입니다.
 
-
 ### [📖 Wiki](https://github.com/connect-foundation/2019-16/wiki)
 
 ### [💾 더 많은 정보](https://www.notion.so/9f5925bc47884bf7ad0bb258a2566c9e)
@@ -30,11 +29,11 @@
 
 ### 기술 스택
 
-| Front-End        | Back-End  | DevOps       | Etc      |
-| ---------------- | --------- | ------------ | -------- |
-| `React`          | `Express` | `Git Action` | `jest`   |
-| `Bulma`          | `mongoDB` |              | `socket` |
-| `Kakao Maps API` | `elasticsearch`|              | `OAuth`  |
+| Front-End        | Back-End        | DevOps       | Etc      |
+| ---------------- | --------------- | ------------ | -------- |
+| `React`          | `Express`       | `Git Action` | `jest`   |
+| `Bulma`          | `mongoDB`       |              | `socket` |
+| `Kakao Maps API` | `elasticsearch` |              | `OAuth`  |
 
 ### 특징
 
@@ -45,10 +44,11 @@
 - 내 지역 기반 스터디 그룹/스터디룸 검색
 
 ## 마이크로서비스 아키텍쳐
+
 ![서비스구성도2](https://user-images.githubusercontent.com/39212304/71319744-a1ddcd80-24e5-11ea-8305-981c3fb6f070.png)
 
-
 ## 화면 구성
+
 <table>
   <tr>
     <th><img width="1067" alt="스크린샷 2019-12-23 오후 2 10 00" src="https://user-images.githubusercontent.com/42646264/71337283-49aed600-258e-11ea-8d12-6aa81e0d3f04.png"></th>
@@ -75,4 +75,3 @@
     <td>결제 완료 페이지</td>
   </tr> 
 </table>
-
