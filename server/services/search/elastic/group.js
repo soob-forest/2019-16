@@ -9,6 +9,8 @@ const {
 
 const { saveCache, getCache } = require("../cache");
 
+const cacheExpiredTime = 1000000
+
 async function AccumulateSuggestionData({ searchWord }) {
   const count = await getQueryCount(searchWord);
 
@@ -253,44 +255,47 @@ exports.searchAllStudyGroup = async info => {
   const { lat, lon, page, isRecruit } = info;
 
   const cache = await getCache({ lat, lon });
-
+  const cacheJson = JSON.parse(cache);
   // page가 0이면 캐싱
   if (page === "0") {
-    setTimeout(async () => {
-      const body = {
-        query: {
-          bool: {
-            must: [
-              {
-                match_all: {}
-              }
-            ],
-            filter: [
-              {
-                term: {
-                  isRecruiting: isRecruit
+    if(!cacheJson && (new Date() - new Date(cacheJson.time) > cacheExpiredTime)){
+      setTimeout(async () => {
+        const body = {
+          query: {
+            bool: {
+              must: [
+                {
+                  match_all: {}
                 }
-              }
-            ]
+              ],
+              filter: [
+                {
+                  term: {
+                    isRecruiting: isRecruit
+                  }
+                }
+              ]
+            }
           }
-        }
-      };
-      const searchResult = await reSearchInDistance(
-        SEARCH_INDEX_STUDYGROUP,
-        body,
-        lat,
-        lon,
-        page,
-        20
-      );
-      const result = searchResult.map(hit => {
-        hit._source._id = hit._id;
-        return hit._source;
-      });
+        };
+        const searchResult = await reSearchInDistance(
+          SEARCH_INDEX_STUDYGROUP,
+          body,
+          lat,
+          lon,
+          page,
+          20
+        );
+        const result = searchResult.map(hit => {
+          hit._source._id = hit._id;
+          return hit._source;
+        });
 
-      if (JSON.stringify(result) !== cache) saveCache({ lat, lon }, result);
-    }, 0);
-    if (cache !== null) return JSON.parse(cache);
+        if (JSON.stringify(result) !== cache) saveCache({ lat, lon }, result);
+      }, 0);
+    }
+    
+    if (cacheJson !== null) return JSON.parse(cacheJson);
   }
 
   const body = {
