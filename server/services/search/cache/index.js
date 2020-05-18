@@ -2,7 +2,7 @@ const { cacheClient } = require("../../../lib/redis/client");
 
 exports.saveCache = ({ lat, lon }, data) => {
   const key = JSON.stringify({ lat, lon });
-
+  data["time"] = new Date().toString();
   cacheClient.set(key, JSON.stringify(data));
 };
 
